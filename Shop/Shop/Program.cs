@@ -7,15 +7,24 @@ namespace Shop
         public static void Main(string[] args)
         {
             var catalog = Catalog.GetInstance();
-
             var myCart = new Cart();
 
-            myCart.AddItemToCart(catalog.GetVegetables[0]);
-            myCart.AddItemToCart(catalog.GetVegetables[1]);
-            myCart.AddItemToCart(catalog.GetVegetables[5]);
-            myCart.AddItemToCart(catalog.GetVegetables[3]);
+            var user1 = new User() { Name = "Vlad", Email = "Vlad228@gmaol.com" };
 
-            myCart.PlaceAnOrder(myCart);
+            user1.Cart.AddItemToCart(catalog.Products[1]);
+            user1.Cart.AddItemToCart(catalog.Products[2]);
+            user1.Cart.AddItemToCart(catalog.Products[3]);
+            user1.Cart.ShowCart();
+            Console.WriteLine($"total cost: {myCart.TotalOrderValue().Value}\n");
+            user1.Cart.AddItemToCart(catalog.Products[5]);
+            user1.Cart.ShowCart();
+            Console.WriteLine($"total cost: {myCart.TotalOrderValue().Value}\n");
+            user1.Cart.RemoveItemFromTheCart(catalog.Products[1]);
+            user1.Cart.RemoveItemFromTheCart(catalog.Products[2]);
+            user1.Cart.ShowCart();
+            Console.WriteLine($"total cost: {myCart.TotalOrderValue().Value}\n");
+            user1.Cart.Order();
+            user1.Cart.ShowCart();
         }
     }
 }

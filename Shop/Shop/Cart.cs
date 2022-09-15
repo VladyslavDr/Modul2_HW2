@@ -1,68 +1,97 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop
 {
     public class Cart
     {
-        private Vegetable[] _vegetables;
+        private Product[] _products;
         private int _counter;
 
         public Cart()
         {
-            _vegetables = new Vegetable[10];
+            _products = new Product[10];
         }
 
-        public Vegetable[] GetCartVegetables => _vegetables;
-
-        public void AddItemToCart(Vegetable vegetable)
+        public Price TotalOrderValue()
         {
-            _vegetables[_counter++] = vegetable;
+            int current = 0;
+
+            for (int index = 0; index < _counter; index++)
+            {
+                current += _products[index].Price.Value;
+            }
+
+            return new Price(value: current, currency: Currency.USD);
+        }
+
+        public void Order()
+        {
+            Console.WriteLine($"order №{new Random().Next()} is ready, await shipment!");
+            Console.WriteLine($"Total order value is {TotalOrderValue().Value}{TotalOrderValue().Currency}");
+
+            EmptyTheShoppingCart();
+        }
+
+        public void EmptyTheShoppingCart()
+        {
+            _counter = 0;
+
+            for (int index = 0; index < _products.Length; index++)
+            {
+                _products[index] = null;
+            }
+        }
+
+        public void AddItemToCart(Product product)
+        {
+            if (_counter < 10)
+            {
+                _products[_counter++] = product;
+            }
+        }
+
+        public void RemoveItemFromTheCart(Product product)
+        {
+            bool status = false;
+
+            for (int index = 0; index < _counter - 1; index++)
+            {
+                if (product == _products[index])
+                {
+                    status = true;
+                }
+
+                if (status)
+                {
+                    _products[index] = _products[index + 1];
+                }
+            }
+
+            if (_counter > 0)
+            {
+                _counter--;
+            }
+            else
+            {
+                _counter = 0;
+            }
         }
 
         public void ShowCart()
         {
-            for (int index = 0; index < _counter; index++)
+            if (_counter is 0)
             {
-                Console.Write($"{index + 1}) {_vegetables[index].GetTypeVegetable} cost: {_vegetables[index].GetCostVegetable.Cost}");
-                Console.WriteLine($"{_vegetables[index].GetCostVegetable.Currencies}/Kg");
+                Console.WriteLine("The cart is empty!");
             }
-        }
-
-        public int GetTotalOrderPrice()
-        {
-            int totalOrderPrice = 0;
 
             for (int index = 0; index < _counter; index++)
             {
-                totalOrderPrice += _vegetables[index].GetCostVegetable.Cost;
+                Console.Write($"{index + 1}) {_products[index].ClothingType} ");
+                Console.Write($"cost: {_products[index].Price.Value}");
+                Console.WriteLine($"{_products[index].Price.Currency}");
             }
 
-            return totalOrderPrice;
-        }
-
-        public void PlaceAnOrder(Cart cart)
-        {
-            string name;
-            string lastName;
-
-            Console.WriteLine("Enter your name: ");
-            name = Console.ReadLine();
-
-            Console.WriteLine("Enter your last name: ");
-            lastName = Console.ReadLine();
-
-            Console.WriteLine($"Dear {lastName} {name}, your order number is {new Random().Next()}");
-            Console.WriteLine($"Your order: ");
-
-            ShowCart();
-
-            Console.WriteLine($"Total order price is {cart.GetTotalOrderPrice()}{cart._vegetables[0].GetCostVegetable.Currencies}");
-
-            _vegetables = null;
+            Console.WriteLine();
         }
     }
 }
