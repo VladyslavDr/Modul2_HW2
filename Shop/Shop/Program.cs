@@ -11,20 +11,20 @@ namespace Shop
 
             var user1 = new User() { Name = "Vlad", Email = "Vlad228@gmaol.com" };
 
-            user1.Cart.AddItemToCart(catalog.Products[1]);
-            user1.Cart.AddItemToCart(catalog.Products[2]);
-            user1.Cart.AddItemToCart(catalog.Products[3]);
-            user1.Cart.ShowCart();
+            user1.Cart.AddItem(catalog.Products[1]);
+            user1.Cart.AddItem(catalog.Products[2]);
+            user1.Cart.AddItem(catalog.Products[3]);
+            user1.Cart.Show();
             Console.WriteLine($"total cost: {myCart.TotalOrderValue().Value}\n");
-            user1.Cart.AddItemToCart(catalog.Products[5]);
-            user1.Cart.ShowCart();
+            user1.Cart.AddItem(catalog.Products[5]);
+            user1.Cart.Show();
             Console.WriteLine($"total cost: {myCart.TotalOrderValue().Value}\n");
-            user1.Cart.RemoveItemFromTheCart(catalog.Products[1]);
-            user1.Cart.RemoveItemFromTheCart(catalog.Products[2]);
-            user1.Cart.ShowCart();
+            user1.Cart.RemoveItem(catalog.Products[1]);
+            user1.Cart.RemoveItem(catalog.Products[2]);
+            user1.Cart.Show();
             Console.WriteLine($"total cost: {myCart.TotalOrderValue().Value}\n");
             user1.Cart.Order();
-            user1.Cart.ShowCart();
+            user1.Cart.Show();
         }
     }
 }

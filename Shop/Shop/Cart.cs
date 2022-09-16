@@ -29,10 +29,10 @@ namespace Shop
             Console.WriteLine($"order №{new Random().Next()} is ready, await shipment!");
             Console.WriteLine($"Total order value is {TotalOrderValue().Value}{TotalOrderValue().Currency}");
 
-            EmptyTheShoppingCart();
+            Empty();
         }
 
-        public void EmptyTheShoppingCart()
+        public void Empty()
         {
             _counter = 0;
 
@@ -42,7 +42,7 @@ namespace Shop
             }
         }
 
-        public void AddItemToCart(Product product)
+        public void AddItem(Product product)
         {
             if (_counter < 10)
             {
@@ -50,7 +50,7 @@ namespace Shop
             }
         }
 
-        public void RemoveItemFromTheCart(Product product)
+        public void RemoveItem(Product product)
         {
             bool status = false;
 
@@ -77,7 +77,7 @@ namespace Shop
             }
         }
 
-        public void ShowCart()
+        public void Show()
         {
             if (_counter is 0)
             {
